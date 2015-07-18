@@ -218,11 +218,11 @@ public class TicTacToePanel extends ImagePanel {
 
         if(buttons[4].getXoro() == null && noComputerFilledSpaces) {
             spaceToFill = 4;
-        } else {
+        } else if (spacesFilledByComputer.size() != 0){
             for (int i = 0; i < buttons.length; i++) {
                 if(spacesFilledByComputer.contains(i)) {
-                    if (i == 1 || i == 4 || i == 7 ) {
-                        {
+                    {
+                        if (i == 1 || i == 4 || i == 7 ) {
                             if (spacesFilledByComputer.contains(i + 1)) {
                                 hasAHorizontalTwoSpaceToFill = true;
                                 horizontalSpacesToFill.add(i - 1);
@@ -233,27 +233,83 @@ public class TicTacToePanel extends ImagePanel {
                                 horizontalSpacesToFill.add(i + 1);
                             }
                         }
-                    }
 
-                    if (i == 2 || i == 5 || i == 8) {
-                        {
+                        if (i == 2 || i == 5 || i == 8) {
                             if (spacesFilledByComputer.contains(i - 1)) {
                                 hasAHorizontalTwoSpaceToFill = true;
                                 horizontalSpacesToFill.add(i - 2);
                             }
                         }
-                    }
 
-                    if (i == 0 || i == 3 || i == 6) {
-                        {
+                        if (i == 0 || i == 3 || i == 6) {
                             if (spacesFilledByComputer.contains(i + 1)) {
                                 hasAHorizontalTwoSpaceToFill = true;
                                 horizontalSpacesToFill.add(i + 1);
                             }
                         }
                     }
+
+                    {
+                        if (i == 0 || i == 1 || i == 2 ) {
+                            if (spacesFilledByComputer.contains(i + 3)) {
+                                hasAVerticalTwoSpaceToFill = true;
+                                verticalSpacesToFill.add(i + 6);
+                            }
+                        }
+
+                        if (i == 3 || i == 4 || i == 5) {
+                            if (spacesFilledByComputer.contains(i - 3)) {
+                                hasAVerticalTwoSpaceToFill = true;
+                                verticalSpacesToFill.add(i + 3);
+                            }
+
+                            if (spacesFilledByComputer.contains(i + 3)) {
+                                hasAHorizontalTwoSpaceToFill = true;
+                                verticalSpacesToFill.add(i - 3);
+                            }
+                        }
+
+                        if (i == 6 || i == 7 || i == 8) {
+                            if (spacesFilledByComputer.contains(i - 3)) {
+                                hasAVerticalTwoSpaceToFill = true;
+                                verticalSpacesToFill.add(i - 6);
+                            }
+                        }
+                    }
+
+                    {
+                        if (i == 0) {
+                            if (spacesFilledByComputer.contains(i + 4)) {
+                                hasADiagonalTwoSpaceToFill = true;
+                                diagonalSpacesToFill.add(i + 8);
+                            }
+                        }
+
+                        if (i == 2) {
+                            if (spacesFilledByComputer.contains(i + 2)) {
+                                hasADiagonalTwoSpaceToFill = true;
+                                diagonalSpacesToFill.add(i + 4);
+                            }
+                        }
+
+                        if (i == 6) {
+                            if (spacesFilledByComputer.contains(i - 2)) {
+                                hasADiagonalTwoSpaceToFill = true;
+                                diagonalSpacesToFill.add(i - 4);
+                            }
+                        }
+
+                        if (i == 8) {
+                            if (spacesFilledByComputer.contains(i - 4)) {
+                                hasADiagonalTwoSpaceToFill = true;
+                                diagonalSpacesToFill.add(i - 8);
+                            }
+                        }
+                    }
                 }
             }
+        } else {
+
         }
 
         if(hasAHorizontalTwoSpaceToFill) {
@@ -264,7 +320,85 @@ public class TicTacToePanel extends ImagePanel {
             }
         }
 
-        int i = 0;
+        if(hasADiagonalTwoSpaceToFill) {
+            for(int i = 0; i < diagonalSpacesToFill.size(); i++) {
+                if(buttons[i].getXoro() != null) {
+                    diagonalSpacesToFill.remove(i);
+                }
+            }
+        }
+
+        if(hasAVerticalTwoSpaceToFill) {
+            for(int i = 0; i < verticalSpacesToFill.size(); i++) {
+                if(buttons[i].getXoro() != null) {
+                    verticalSpacesToFill.remove(i);
+                }
+            }
+        }
+
+        int randomVariable = 0;
+
+        if (hasAHorizontalTwoSpaceToFill) {
+            randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
+
+            spaceToFill = horizontalSpacesToFill.get(randomVariable);
+        } else if (hasAHorizontalTwoSpaceToFill && hasADiagonalTwoSpaceToFill) {
+            randomVariable = (int) Math.random() * 2 + 1;
+
+            if(randomVariable == 1) {
+                randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
+
+                spaceToFill = horizontalSpacesToFill.get(randomVariable);
+            } else if(randomVariable == 2) {
+                randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
+
+                spaceToFill = diagonalSpacesToFill.get(randomVariable);
+            }
+        } else if (hasAHorizontalTwoSpaceToFill && hasAVerticalTwoSpaceToFill) {
+            randomVariable = (int) Math.random() * 2 + 1;
+
+            if(randomVariable == 1) {
+                randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
+
+                spaceToFill = horizontalSpacesToFill.get(randomVariable);
+            } else if(randomVariable == 2) {
+                randomVariable = (int) Math.random() * verticalSpacesToFill.size();
+
+                spaceToFill = verticalSpacesToFill.get(randomVariable);
+            }
+        } else if (hasADiagonalTwoSpaceToFill) {
+            randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
+
+            spaceToFill = diagonalSpacesToFill.get(randomVariable);
+        } else if (hasADiagonalTwoSpaceToFill && hasAVerticalTwoSpaceToFill) {
+            randomVariable = (int) Math.random() * 2 + 1;
+
+            if(randomVariable == 1) {
+                randomVariable = (int) Math.random() * verticalSpacesToFill.size();
+
+                spaceToFill = verticalSpacesToFill.get(randomVariable);
+            } else if(randomVariable == 2) {
+                randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
+
+                spaceToFill = diagonalSpacesToFill.get(randomVariable);
+            }
+        } else if (hasADiagonalTwoSpaceToFill && hasAHorizontalTwoSpaceToFill && hasAVerticalTwoSpaceToFill) {
+            randomVariable = (int) Math.random() * 3 + 1;
+
+            if(randomVariable == 1) {
+                randomVariable = (int) Math.random() * verticalSpacesToFill.size();
+
+                spaceToFill = verticalSpacesToFill.get(randomVariable);
+            } else if(randomVariable == 2) {
+                randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
+
+                spaceToFill = diagonalSpacesToFill.get(randomVariable);
+            } else if(randomVariable == 3) {
+                randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
+
+                spaceToFill = horizontalSpacesToFill.get(randomVariable);
+            }
+        }
 
         return spaceToFill;
     }
