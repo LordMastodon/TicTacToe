@@ -313,7 +313,7 @@ public class TicTacToePanel extends ImagePanel {
 
         if(hasAHorizontalTwoSpaceToFill) {
             for(int i = 0; i < horizontalSpacesToFill.size(); i++) {
-                if(buttons[i].getXoro() != null) {
+                if(buttons[horizontalSpacesToFill.get(i)].getXoro() == XOrO.X) {
                     horizontalSpacesToFill.remove(i);
                 }
             }
@@ -323,15 +323,13 @@ public class TicTacToePanel extends ImagePanel {
             for(int i = 0; i < diagonalSpacesToFill.size(); i++) {
                 if(buttons[diagonalSpacesToFill.get(i)].getXoro() == XOrO.X) {
                     diagonalSpacesToFill.remove(i);
-
-                    System.out.println("Diagonal space removed");
                 }
             }
         }
 
         if(hasAVerticalTwoSpaceToFill) {
             for(int i = 0; i < verticalSpacesToFill.size(); i++) {
-                if(buttons[i].getXoro() != null) {
+                if(buttons[verticalSpacesToFill.get(i)].getXoro() == XOrO.X) {
                     verticalSpacesToFill.remove(i);
                 }
             }
@@ -340,81 +338,99 @@ public class TicTacToePanel extends ImagePanel {
         int randomVariable = 0;
 
         if (hasAHorizontalTwoSpaceToFill) {
-            randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
-
-            spaceToFill = horizontalSpacesToFill.get(randomVariable);
-
-            System.out.println("Has a horizontal space");
-        } else if (hasAHorizontalTwoSpaceToFill && hasADiagonalTwoSpaceToFill) {
-            randomVariable = (int) Math.random() * 2 + 1;
-
-            if(randomVariable == 1) {
-                randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
+            if (horizontalSpacesToFill.size() > 0) {
+                randomVariable = (int) (Math.random() * horizontalSpacesToFill.size());
 
                 spaceToFill = horizontalSpacesToFill.get(randomVariable);
-            } else if(randomVariable == 2) {
-                randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
 
-                spaceToFill = diagonalSpacesToFill.get(randomVariable);
+                System.out.println("Has a horizontal space");
             }
+        } else if (hasAHorizontalTwoSpaceToFill && hasADiagonalTwoSpaceToFill) {
+             if(horizontalSpacesToFill.size() > 0 && verticalSpacesToFill.size() > 0) {
+                 randomVariable = (int) (Math.random() * 2 + 1);
+
+                 if (randomVariable == 1) {
+                     randomVariable = (int) (Math.random() * horizontalSpacesToFill.size());
+
+                     spaceToFill = horizontalSpacesToFill.get(randomVariable);
+                 } else if (randomVariable == 2) {
+                     randomVariable = (int) (Math.random() * diagonalSpacesToFill.size());
+
+                     spaceToFill = diagonalSpacesToFill.get(randomVariable);
+                 }
+             }
         } else if (hasAHorizontalTwoSpaceToFill && hasAVerticalTwoSpaceToFill) {
-            randomVariable = (int) Math.random() * 2 + 1;
+            if(horizontalSpacesToFill.size() > 0 && verticalSpacesToFill.size() > 0) {
+                randomVariable = (int) (Math.random() * 2 + 1);
 
-            if(randomVariable == 1) {
-                randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
+                if (randomVariable == 1) {
+                    randomVariable = (int) (Math.random() * horizontalSpacesToFill.size());
 
-                spaceToFill = horizontalSpacesToFill.get(randomVariable);
-            } else if(randomVariable == 2) {
-                randomVariable = (int) Math.random() * verticalSpacesToFill.size();
+                    spaceToFill = horizontalSpacesToFill.get(randomVariable);
+                } else if (randomVariable == 2) {
+                    randomVariable = (int) (Math.random() * verticalSpacesToFill.size());
 
-                spaceToFill = verticalSpacesToFill.get(randomVariable);
+                    spaceToFill = verticalSpacesToFill.get(randomVariable);
+                }
             }
         } else if (hasADiagonalTwoSpaceToFill) {
-            randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
-
-            spaceToFill = diagonalSpacesToFill.get(randomVariable);
-
-            System.out.println("Has a diagonal space");
-        } else if (hasAVerticalTwoSpaceToFill) {
-            randomVariable = (int) Math.random() * verticalSpacesToFill.size();
-
-            spaceToFill = verticalSpacesToFill.get(randomVariable);
-
-            System.out.println("Has a vertical space");
-        } if (hasADiagonalTwoSpaceToFill && hasAVerticalTwoSpaceToFill) {
-            randomVariable = (int) Math.random() * 2 + 1;
-
-            if(randomVariable == 1) {
-                randomVariable = (int) Math.random() * verticalSpacesToFill.size();
-
-                spaceToFill = verticalSpacesToFill.get(randomVariable);
-            } else if(randomVariable == 2) {
-                randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
+            if(diagonalSpacesToFill.size() > 0) {
+                randomVariable = (int) (Math.random() * diagonalSpacesToFill.size());
 
                 spaceToFill = diagonalSpacesToFill.get(randomVariable);
+
+                System.out.println("Has a diagonal space");
+            }
+        } else if (hasAVerticalTwoSpaceToFill) {
+            if(verticalSpacesToFill.size() > 0) {
+                randomVariable = (int) (Math.random() * verticalSpacesToFill.size());
+
+                spaceToFill = verticalSpacesToFill.get(randomVariable);
+
+                System.out.println("Has a vertical space");
+            }
+        } if (hasADiagonalTwoSpaceToFill && hasAVerticalTwoSpaceToFill) {
+            if(diagonalSpacesToFill.size() > 0 && verticalSpacesToFill.size() > 0) {
+                randomVariable = (int) (Math.random() * 2 + 1);
+
+                if (randomVariable == 1) {
+                    randomVariable = (int) (Math.random() * verticalSpacesToFill.size());
+
+                    spaceToFill = verticalSpacesToFill.get(randomVariable);
+                } else if (randomVariable == 2) {
+                    randomVariable = (int) (Math.random() * diagonalSpacesToFill.size());
+
+                    spaceToFill = diagonalSpacesToFill.get(randomVariable);
+                }
             }
         } else if (hasADiagonalTwoSpaceToFill && hasAHorizontalTwoSpaceToFill && hasAVerticalTwoSpaceToFill) {
-            randomVariable = (int) Math.random() * 3 + 1;
+            if(diagonalSpacesToFill.size() > 0 && horizontalSpacesToFill.size() > 0 && verticalSpacesToFill.size() > 0) {
+                randomVariable = (int) (Math.random() * 3 + 1);
 
-            if(randomVariable == 1) {
-                randomVariable = (int) Math.random() * verticalSpacesToFill.size();
+                if (randomVariable == 1) {
+                    randomVariable = (int) (Math.random() * verticalSpacesToFill.size());
 
-                spaceToFill = verticalSpacesToFill.get(randomVariable);
-            } else if(randomVariable == 2) {
-                randomVariable = (int) Math.random() * diagonalSpacesToFill.size();
+                    spaceToFill = verticalSpacesToFill.get(randomVariable);
+                } else if (randomVariable == 2) {
+                    randomVariable = (int) (Math.random() * diagonalSpacesToFill.size());
 
-                spaceToFill = diagonalSpacesToFill.get(randomVariable);
-            } else if(randomVariable == 3) {
-                randomVariable = (int) Math.random() * horizontalSpacesToFill.size();
+                    spaceToFill = diagonalSpacesToFill.get(randomVariable);
+                } else if (randomVariable == 3) {
+                    randomVariable = (int) (Math.random() * horizontalSpacesToFill.size());
 
-                spaceToFill = horizontalSpacesToFill.get(randomVariable);
+                    spaceToFill = horizontalSpacesToFill.get(randomVariable);
+                }
             }
         } else if(buttons[4].getXoro() == null && noComputerFilledSpaces) {
             spaceToFill = 4;
-        } else {
-            int emptySpaceToUse = (int) Math.random() * spacesNotFilledByAnything.size();
+        }
+
+        if (!hasADiagonalTwoSpaceToFill && !hasAVerticalTwoSpaceToFill && !hasADiagonalTwoSpaceToFill && buttons[4].getXoro() == XOrO.O) {
+            int emptySpaceToUse = (int) (Math.random() * spacesNotFilledByAnything.size());
 
             spaceToFill = spacesNotFilledByAnything.get(emptySpaceToUse);
+
+            System.out.println("Using else");
         }
 
         System.out.println(spaceToFill);
