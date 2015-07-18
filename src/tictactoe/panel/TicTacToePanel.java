@@ -68,6 +68,10 @@ public class TicTacToePanel extends ImagePanel {
                     if (turn == Turn.COMPUTER_TURN) {
                         int spaceToFill = smartComputer();
 
+                        if(spaceToFill > 8) {
+                            spaceToFill = smartComputer();
+                        }
+
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException ex) {
@@ -425,7 +429,7 @@ public class TicTacToePanel extends ImagePanel {
             spaceToFill = 4;
         }
 
-        if (!hasADiagonalTwoSpaceToFill && !hasAVerticalTwoSpaceToFill && !hasADiagonalTwoSpaceToFill && buttons[4].getXoro() == XOrO.O) {
+        if (!hasADiagonalTwoSpaceToFill && !hasAVerticalTwoSpaceToFill && !hasAHorizontalTwoSpaceToFill && buttons[4].getXoro() != null) {
             int emptySpaceToUse = (int) (Math.random() * spacesNotFilledByAnything.size());
 
             spaceToFill = spacesNotFilledByAnything.get(emptySpaceToUse);
@@ -433,9 +437,7 @@ public class TicTacToePanel extends ImagePanel {
             System.out.println("Using else");
         }
 
-        System.out.println(spaceToFill);
-
-        return spaceToFill;
+        return buttons[spaceToFill].getXoro() == null ? spaceToFill : spacesNotFilledByAnything.get(1);
     }
 
 }
